@@ -60,6 +60,7 @@ export const weatherSchema = z.object({
 
     apparent_temperature_max: z.array(z.number()),
     apparent_temperature_min: z.array(z.number()),
+    temperature_2m_mean: z.array(z.number()),
 
     precipitation_probability_max: z.array(z.number()),
 
