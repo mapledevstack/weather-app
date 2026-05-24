@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query"
 import Card from "./Card"
 import { getWeather } from "../../api"
-import { WEATHER_CODES } from "../../constants/weatherCodes"
+import WeatherIcon from "../WeatherIcon"
 
 const DailyForecast = () => {
   const { data } = useSuspenseQuery({
@@ -10,26 +10,27 @@ const DailyForecast = () => {
   })
 
   return (
-    <Card title="Daily Forecast">
-      <div className="flex flex-col gap-4">
+    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-4">
         {
           data?.daily.time.map((day, index) => {
+            const date = new Date(day)
+
             return (
-              <div key={day}>
-                <p>{day}</p>
+              <div key={day} className="flex justify-between">
 
-                <p>{WEATHER_CODES[data?.daily.weather_code[index]]}</p>
+                <p className="w-8">{date.toLocaleDateString(undefined, {weekday:"short"})}</p>
 
-                <p>{data?.daily.temperature_2m_mean[index]}</p>
-                
-                <p>{data?.daily.temperature_2m_min[index]}</p>
+                <WeatherIcon code={data?.daily.weather_code[index]}/>
 
-                <p>{data?.daily.temperature_2m_max[index]}</p>
+                <p>{data?.daily.temperature_2m_mean[index]} °C</p>
+
+                <p className="text-gray-500/75">{data?.daily.temperature_2m_min[index]} °C</p>
+
+                <p className="text-gray-500/75">{data?.daily.temperature_2m_max[index]} °C</p>
               </div>
             )
           })
         }
-      </div>
     </Card>
   )
 }

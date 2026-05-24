@@ -1,4 +1,4 @@
-export const WEATHER_CODES: Record<number, string> = {
+export const WEATHER_DESC: Record<number, string> = {
   0: "Clear sky",
 
   1: "Mainly clear",
