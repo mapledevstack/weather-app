@@ -3,11 +3,16 @@ import { getWeather } from "../../api"
 import Card from "./Card"
 import WeatherIcon from "../WeatherIcon"
 import { WEATHER_DESC } from "../../constants/weatherDescription"
+import type { Location } from "../../types"
 
-const CurrentWeather = () => {
+type Props = {
+  location: Location
+}
+
+const CurrentWeather = ({location}: Props) => {
   const { data } = useSuspenseQuery({
-    queryKey: ['weather'],
-    queryFn: () => getWeather({lat:60, lon:120})
+    queryKey: ['weather', location],
+    queryFn: () => getWeather({lat: location.lat, lon: location.lon})
   })
 
   const date = new Date(data.current.time)

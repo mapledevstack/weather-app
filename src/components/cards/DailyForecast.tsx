@@ -2,11 +2,16 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import Card from "./Card"
 import { getWeather } from "../../api"
 import WeatherIcon from "../WeatherIcon"
+import type { Location } from "../../types"
 
-const DailyForecast = () => {
+type Props = {
+  location: Location
+}
+
+const DailyForecast = ({location}: Props) => {
   const { data } = useSuspenseQuery({
-    queryKey: ['weather'],
-    queryFn: () => getWeather({lat: 60, lon: 120})
+    queryKey: ['weather', location],
+    queryFn: () => getWeather({lat: location.lat, lon: location.lon})
   })
 
   return (
