@@ -1,3 +1,4 @@
+import { geocodeSchema } from "./schemas/geoCodeSchema"
 import { weatherSchema } from "./schemas/weatherSchema"
 
 export const getWeather = async ({ lat, lon }: {lat: number, lon: number}) => {
@@ -6,4 +7,13 @@ export const getWeather = async ({ lat, lon }: {lat: number, lon: number}) => {
   )
   const data = await res.json()
   return weatherSchema.parse(data)
+}
+
+export const getGeoCode = async (location: string) => {
+  const res = await fetch(
+    `https://geocoding-api.open-meteo.com/v1/search?name=${location}&count=1`
+  )
+  
+  const data = await res.json()
+  return geocodeSchema.parse(data)
 }
