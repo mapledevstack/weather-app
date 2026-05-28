@@ -2,30 +2,28 @@ import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-lea
 import { useEffect } from "react"
 import "leaflet/dist/leaflet.css"
 import type { Location } from "../types"
+const MAPTILER_API = import.meta.env.VITE_MAPTILER_KEY
 
 type Props = {
   location: Location
   setLocation: (location: Location) => void
   setCity: (city: string) => void
+  mapType: string
 }
 
-const Map = ({ location, setLocation, setCity }: Props) => {
-  const { lat, lon } = location
-
+const Map = ({ location, setLocation, setCity, mapType }: Props) => {
+  
   return (
-    <MapContainer center={[lat, lon]} zoom={5} style={{ width: "600px", height: "300px" }}>
+    <MapContainer center={[location.lat, location.lon]} zoom={5} style={{ width: "600px", height: "300px" }}>
       
       <Recenter location={location} />
-
       <MapClick setLocation={setLocation} setCity={setCity} />
+      <Marker position={[location.lat, location.lon]} />
 
       <TileLayer
         attribution='&copy; OpenStreetMap contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        url={`https://api.maptiler.com/maps/${mapType}/{z}/{x}/{y}.png?key=${MAPTILER_API}`}
       />
-
-      <Marker position={[lat, lon]} />
-
     </MapContainer>
   )
 }
@@ -37,7 +35,7 @@ const Recenter = ({ location }: { location: Location }) => {
 
   useEffect(() => {
     map.panTo([location.lat, location.lon])
-  }, [location, map])
+  }, [location])
 
   return null
 }

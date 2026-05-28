@@ -8,10 +8,12 @@ import type { Location } from "./types"
 import LocationDropdown from "./components/dropdowns/LocationDropdown"
 import { useQuery } from "@tanstack/react-query"
 import { getGeoCode } from "./api"
+import MapTypeDropdown from "./components/dropdowns/MapTypeDropdown"
 
 const App = () => {
   const [location, setLocation] = useState<Location>({lat: 60, lon: 120})
   const [city, setCity] = useState('Tokyo')
+  const [mapType, setMapType] = useState('dataviz-dark')
 
   const { data: geoCodeData } = useQuery({
     queryKey: ['geoCode', city],
@@ -25,8 +27,17 @@ const App = () => {
 
   return (
     <div className="flex flex-col gap-8">
-      <LocationDropdown city={city} setCity={setCity} />
-      <Map location={coordinates} setLocation={setLocation} setCity={setCity} />
+      <div className="flex gap-8">
+        <div className="flex gap-4">
+          <h1 className="text-2xl font-semibold">Location: </h1>
+          <LocationDropdown city={city} setCity={setCity} />
+        </div>
+        <div className="flex gap-4">
+          <h1 className="text-2xl font-semibold">Map Type:</h1>
+          <MapTypeDropdown mapType={mapType} setMapType={setMapType}/>
+        </div>
+      </div>
+      <Map location={coordinates} setLocation={setLocation} setCity={setCity} mapType={mapType} />
       <CurrentWeather location={coordinates} />
       <HourlyForecast location={coordinates} />
       <DailyForecast location={coordinates} />
