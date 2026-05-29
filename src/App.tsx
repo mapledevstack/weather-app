@@ -19,6 +19,7 @@ const App = () => {
   const [location, setLocation] = useState<Coordinates>({lat: 60, lon: 120})
   const [city, setCity] = useState('Tokyo')
   const [mapType, setMapType] = useState('dataviz-dark')
+  const [showSidePanel, setShowSidePanel] = useState(true)
 
   const { data: geoCodeData } = useQuery({
     queryKey: ['geoCode', city],
@@ -61,7 +62,7 @@ const App = () => {
         </Suspense>
       </div>
 
-      <SidePanel location={coordinates} />
+      <SidePanel location={coordinates} showSidePanel={showSidePanel} setShowSidePanel={setShowSidePanel} />
     </>
   )
 }

@@ -5,14 +5,50 @@ import { Suspense } from "react"
 import Card from "./cards/Card"
 import { Slider } from "./ui/slider"
 import clsx from "clsx"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { LucideChevronLeft, LucideChevronRight, LucideInfo } from "lucide-react"
+import AirPollutionSkeleton from "./skeletonLoaders/AirPollutionSkeleton"
 
-const SidePanel = ({ location }: {location: Coordinates}) => {
+type Props = {
+  location: Coordinates
+  showSidePanel: boolean
+  setShowSidePanel: (showSidePanel: boolean) => void
+}
+
+const SidePanel = ({ location, showSidePanel, setShowSidePanel }: Props) => {
   return (
-    <div className="fixed top-0 right-0 h-screen w-80 bg-sidebar z-1001 shadow-md overflow-y-scroll">
-      <h1 className="text-3xl font-semibold">Air Quality</h1>
-      <Suspense>
-        <AirPollution location={location} />
-      </Suspense>
+    <div className={clsx("fixed top-0 right-0 z-1001 shadow-md bg-sidebar transition-transform duration-300 ease-in-out", showSidePanel ? "" : 'translate-x-full')}>
+      <div className="relative flex flex-col gap-3">
+        <div className="absolute -translate-x-full">
+          {
+            showSidePanel 
+              ? <LucideChevronRight className="bg-sidebar size-12 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(false)}/>
+              : <LucideChevronLeft className="bg-sidebar size-12 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(true)}/>
+          }
+        </div>
+        <div className="flex items-center gap-2 p-3">
+          <h1 className="text-3xl font-semibold">Air Quality</h1>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <LucideInfo className="size-4"/>
+              </TooltipTrigger>
+              <TooltipContent className="z-2000 max-w-xs">
+                <p>
+                  Air quality data includes particulate matter (PM2.5, PM10), ozone, carbon monoxide, nitrogen dioxide, sulfur dioxide, and dust concentrations.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+      
+        <div className="h-screen w-80 overflow-y-scroll">
+          <Suspense fallback={<AirPollutionSkeleton />}>
+            <AirPollution location={location}/>
+          </Suspense>
+        </div>
+
+      </div>
     </div>
   )
 }
@@ -60,7 +96,21 @@ const AirPollution = ({location}: {location: Coordinates}) => {
         return (
           <Card key={pollutant} className="hover:scale-105 transition-transform duration-300 bg-linear-to-br from-sidebar-accent to-sidebar-accent/60 gap-0!" childrenClassName="flex flex-col gap-3">
             <div className="flex justify-between">
-              <span className="text-lg font-bold">{pollutant}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold">{pollutantInfo[pollutant].label}</span>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <LucideInfo className="size-4"/>
+                    </TooltipTrigger>
+                    <TooltipContent className="z-2000 max-w-xs">
+                      <p>
+                        {pollutantInfo[pollutant].description}
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
               <span className="text-lg font-semibold">{value} {units}</span>
             </div>
 
@@ -151,4 +201,41 @@ export const airQualityRanges = {
   },
 
 
+} as const;
+
+export const pollutantInfo = {
+  pm10: {
+    label: "PM10",
+    description: "Concentration of particulate matter smaller than 10 μm in diameter.",
+  },
+
+  pm2_5: {
+    label: "PM2.5",
+    description: "Concentration of fine particulate matter smaller than 2.5 μm in diameter.",
+  },
+
+  ozone: {
+    label: "O₃",
+    description: "Concentration of ground-level ozone, a pollutant formed by sunlight and emissions.",
+  },
+
+  carbon_monoxide: {
+    label: "CO",
+    description: "Concentration of carbon monoxide produced by vehicle exhaust and fuel combustion.",
+  },
+
+  dust: {
+    label: "Dust",
+    description: "Concentration of airborne dust particles from natural and human-made sources.",
+  },
+
+  nitrogen_dioxide: {
+    label: "NO₂",
+    description: "Concentration of nitrogen dioxide, commonly emitted by vehicles and industrial activity.",
+  },
+
+  sulphur_dioxide: {
+    label: "SO₂",
+    description: "Concentration of sulfur dioxide produced by burning sulfur-containing fuels.",
+  },
 } as const;
