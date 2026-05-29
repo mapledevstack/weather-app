@@ -1,12 +1,12 @@
 import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet"
 import { useEffect } from "react"
 import "leaflet/dist/leaflet.css"
-import type { Location } from "../types"
+import type { Coordinates } from "../types"
 const MAPTILER_API = import.meta.env.VITE_MAPTILER_KEY
 
 type Props = {
-  location: Location
-  setLocation: (location: Location) => void
+  location: Coordinates
+  setLocation: (location: Coordinates) => void
   setCity: (city: string) => void
   mapType: string
 }
@@ -30,7 +30,7 @@ const Map = ({ location, setLocation, setCity, mapType }: Props) => {
 
 export default Map
 
-const Recenter = ({ location }: { location: Location }) => {
+const Recenter = ({ location }: { location: Coordinates }) => {
   const map = useMap()
 
   useEffect(() => {

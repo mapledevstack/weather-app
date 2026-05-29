@@ -3,10 +3,10 @@ import { getWeather } from "../../api"
 import Card from "./Card"
 import { WiBarometer, WiNightCloudyHigh, WiRain, WiWindDeg } from "react-icons/wi"
 import { LuArrowUp } from "react-icons/lu"
-import type { Location } from "../../types"
+import type { Coordinates } from "../../types"
 
 type Props = {
-  location: Location
+  location: Coordinates
 }
 
 const AdditionalInfo = ({location}: Props) => {

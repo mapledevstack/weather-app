@@ -1,5 +1,7 @@
+import { airPollutionSchema } from "./schemas/airPollutionSchema"
 import { geocodeSchema } from "./schemas/geoCodeSchema"
 import { weatherSchema } from "./schemas/weatherSchema"
+import type { Coordinates } from "./types"
 
 export const getWeather = async ({ lat, lon }: {lat: number, lon: number}) => {
   const res = await fetch(
@@ -16,4 +18,13 @@ export const getGeoCode = async (location: string) => {
   
   const data = await res.json()
   return geocodeSchema.parse(data)
+}
+
+export const getAirPollution = async (location: Coordinates) => {
+  const res = await fetch(
+    `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.lat}&longitude=${location.lon}&current=pm10,pm2_5,carbon_monoxide,nitrogen_dioxide,sulphur_dioxide,ozone,dust&timezone=auto`
+  )
+
+  const data = await res.json()
+  return airPollutionSchema.parse(data)
 }
