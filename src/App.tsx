@@ -15,6 +15,7 @@ import HourlyForecastSkeleton from "./components/skeletonLoaders/HourlyForecastS
 import CurrentWeatherSkeleton from "./components/skeletonLoaders/CurrentWeatherSkeleton"
 import SidePanel from "./components/SidePanel"
 import clsx from "clsx"
+import LightDarkToggle from "./components/LightDarkToggle"
 
 const App = () => {
   const [location, setLocation] = useState<Coordinates>({lat: 60, lon: 120})
@@ -46,12 +47,15 @@ const App = () => {
   return (
     <>
       <div className={clsx("flex flex-col gap-8 w-full p-8 transition-[width] duration-300 ease-in-out", showSidePanel ? "lg:w-[calc(100vw-var(--sidebar-width))]" : "")}>
-        <div className="flex justify-between max-[770px]:flex-col max-[770px]:gap-6">
+        <div className="flex justify-between max-[1330px]:flex-col max-[1330px]:gap-8 max-[1330px]:items-center">
           <div className="flex gap-4">
             <h1 className="text-2xl font-semibold">Location: </h1>
             <LocationDropdown city={city} setCity={setCity} />
           </div>
-          <div className="flex gap-4 min-[770px]:-translate-x-16">
+
+          <LightDarkToggle />
+
+          <div className="flex gap-4 min-[1330px]:-translate-x-16">
             <h1 className="text-2xl font-semibold">Map Type:</h1>
             <MapTypeDropdown mapType={mapType} setMapType={setMapType}/>
           </div>

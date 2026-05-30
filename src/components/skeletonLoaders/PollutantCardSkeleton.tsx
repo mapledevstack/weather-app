@@ -11,14 +11,14 @@ const PollutantCardSkeleton = () => {
               <Skeleton className="w-23 h-7 bg-sidebar" />
             </div>
 
-        <Skeleton className="w-72 h-1 bg-sidebar" />
+        <Skeleton className="w-81 h-1 dark:bg-sidebar" />
         <div className="flex justify-between text-xs">
-          <Skeleton className="w-11 h-4 bg-sidebar" />
-          <Skeleton className="w-11 h-4 bg-sidebar" />
+          <Skeleton className="w-11 h-4 dark:bg-sidebar" />
+          <Skeleton className="w-11 h-4 dark:bg-sidebar" />
         </div>
         <div className="flex justify-between">
           {Array.from({length: 5}).map((_, index) => (
-            <Skeleton key={index} className="w-18 h-6 bg-sidebar"/>
+            <Skeleton key={index} className="w-13 h-6 dark:bg-sidebar"/>
           ))}
         </div>
     </Card>
