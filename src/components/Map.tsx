@@ -14,7 +14,7 @@ type Props = {
 const Map = ({ location, setLocation, setCity, mapType }: Props) => {
   
   return (
-    <MapContainer center={[location.lat, location.lon]} zoom={5} style={{ width: "600px", height: "300px" }}>
+    <MapContainer center={[location.lat, location.lon]} zoom={5} className="w-full h-120 2xl:h-full">
       
       <Recenter location={location} />
       <MapClick setLocation={setLocation} setCity={setCity} />

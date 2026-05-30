@@ -3,7 +3,7 @@ import { Skeleton } from "../ui/skeleton"
 
 const DailyForecastSkeleton = () => {
   return (
-    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-4">
+    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-4" className="pb-9">
         {
           Array(7).fill(null).map((_, index) => {
             return (

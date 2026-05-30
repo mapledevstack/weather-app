@@ -22,11 +22,11 @@ const SidePanel = ({ location, showSidePanel, setShowSidePanel }: Props) => {
         <div className="absolute -translate-x-full">
           {
             showSidePanel 
-              ? <LucideChevronRight className="bg-sidebar size-12 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(false)}/>
-              : <LucideChevronLeft className="bg-sidebar size-12 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(true)}/>
+              ? <LucideChevronRight className="bg-sidebar-ring size-18 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(false)}/>
+              : <LucideChevronLeft className="bg-sidebar-ring size-18 p-2 rounded-b-md cursor-pointer transition-transform hover:scale-105 shadow-md" onClick={() => setShowSidePanel(true)}/>
           }
         </div>
-        <div className="flex items-center gap-2 p-3">
+        <div className="flex items-center gap-2 p-3 w-(--sidebar-width)">
           <h1 className="text-3xl font-semibold">Air Quality</h1>
           <TooltipProvider>
             <Tooltip>
@@ -42,7 +42,7 @@ const SidePanel = ({ location, showSidePanel, setShowSidePanel }: Props) => {
           </TooltipProvider>
         </div>
       
-        <div className="h-screen w-80 overflow-y-scroll">
+        <div className="h-screen overflow-y-scroll pl-2 pr-2">
           <Suspense fallback={<AirPollutionSkeleton />}>
             <AirPollution location={location}/>
           </Suspense>

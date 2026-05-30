@@ -2,10 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query"
 import Card from "./Card"
 import { getWeather } from "../../api"
 import WeatherIcon from "../WeatherIcon"
-import type { Location } from "../../types"
+import type { Coordinates } from "../../types"
 
 type Props = {
-  location: Location
+  location: Coordinates
 }
 
 const DailyForecast = ({location}: Props) => {
@@ -15,7 +15,7 @@ const DailyForecast = ({location}: Props) => {
   })
 
   return (
-    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-4">
+    <Card title="Daily Forecast" childrenClassName="flex flex-col gap-4" className="2xl:justify-between pb-9">
         {
           data?.daily.time.map((day, index) => {
             const date = new Date(day)

@@ -3,7 +3,7 @@ import { Skeleton } from "../ui/skeleton"
 
 const AdditionalInfoSkeleton = () => {
   return (
-    <Card title="Additional Weather Info" childrenClassName="flex flex-col gap-8">
+    <Card title="Additional Weather Info" childrenClassName="grid grid-cols-1 md:grid-cols-2 gap-8">
       {
         Array(4).fill(null).map((_, index) => {
           return (
